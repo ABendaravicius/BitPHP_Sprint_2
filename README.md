@@ -15,3 +15,4 @@ Create a PHP personnel management system that displays data about personnel, pro
 - Have a local Apache, MySQL and PHP server (*usage of AMPPS **recommended***)
 - Ensure you do not have a database with the name of **projectsdb** already created in your local MySQL server.
 ### Using the app:
+- Open `index.php` file, located in the root directory.

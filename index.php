@@ -26,7 +26,7 @@
         if ($path == 'people') {
             include 'utils/people.php'; // Loads people data
         } else if ($path == 'projects') {
-            // include 'utils/projects.php'; // Loads projects data
+            include 'utils/projects.php'; // Loads projects data
         }
     ?>
 </body>
