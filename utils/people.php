@@ -18,7 +18,8 @@
                     LEFT JOIN projects_people
                     ON people.id = projects_people.pers_id
                     LEFT JOIN projects
-                    ON projects_people.prj_id = projects.id;';
+                    ON projects_people.prj_id = projects.id
+                    ORDER BY people.id;';
             $result = $conn->query($sql);
 
             if (mysqli_num_rows($result) > 0) { // Forming table with read data
@@ -61,16 +62,35 @@
         $_POST['last_name'] = $row['last_name'];
 
         echo '<form method="POST">
-            <h3>Update person</h3>
-            <label for="first_name">First name:</label>
-            <input type="text" name="first_name" id="first_name" value="' . $row['first_name'] . '">
-            <label for="last_name">Last name:</label>
-            <input type="text" name="last_name" id="last_name" value="' . $row['last_name'] . '">
-            <label for="project">Asigned project:</label>
-            <select name="project" id="project">
-                <option>None</option>
-            </select>   
-            <button type="submit">Update</button>
-        </form>';
+                <h3>Update person</h3>
+                <label for="first_name">First name:</label>
+                <input type="text" name="first_name" id="first_name" value="' . $row['first_name'] . '">
+                <label for="last_name">Last name:</label>
+                <input type="text" name="last_name" id="last_name" value="' . $row['last_name'] . '">
+                <label for="project">Asigned project:</label>
+                <select name="project" id="project">
+                    <option value="">None</option>';
+        $sql = 'SELECT DISTINCT project_name FROM projects;';
+        $conn->query($sql);
+        $result = $conn->query($sql);
+
+        $sql = 'SELECT DISTINCT project_name FROM projects LEFT JOIN projects_people ON id = prj_id WHERE pers_id = ' . $_GET['id'] . ';';
+        $conn->query($sql);
+        $result_p = $conn->query($sql);
+        $asigned_project = $result_p->fetch_assoc();
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()){
+                if ($row['project_name'] == $asigned_project['project_name']) {
+                    echo '<option value="' . $row['project_name'] . '" selected>' . $row['project_name'] . '</option>';
+                } else {
+                    echo '<option value="' . $row['project_name'] . '">' . $row['project_name'] . '</option>';
+                }
+            }
+        }
+                
+        echo '  </select>   
+                <button type="submit">Update</button>
+            </form>';
     }
 ?>
