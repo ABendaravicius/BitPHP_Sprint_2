@@ -60,7 +60,7 @@
 
         echo '<form method="POST">
             <h3>Update project</h3>
-            <label for="project_name">First name:</label>
+            <label for="project_name">Project name:</label>
             <input type="text" name="project_name" id="project_name" value="' . $row['project_name'] . '">
             <button type="submit">Update</button>
         </form>';

@@ -8,6 +8,8 @@
         header('location:./?path=' . $_GET['path']);
         exit;
     }
+
+    $_POST['asigned_project_id'] = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">

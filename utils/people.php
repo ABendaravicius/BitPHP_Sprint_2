@@ -49,6 +49,20 @@
             <input type="text" name="first_name" id="first_name">
             <label for="last_name">Last name:</label>
             <input type="text" name="last_name" id="last_name">
+            <label for="project">Asigned project:</label>
+            <select name="project_id" id="project">
+                <option value="0">None</option>';
+        $sql = 'SELECT DISTINCT projects.id, project_name FROM projects;';
+        $conn->query($sql);
+        $result = $conn->query($sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()){
+                echo '<option value=' . $row['id'] . '>' . $row['project_name'] . '</option>';
+            }
+        }
+                
+        echo '  </select>
             <button type="submit">Add</button>
         </form>';
     } // UPDATE EXISTING PERSON FORM
@@ -68,23 +82,23 @@
                 <label for="last_name">Last name:</label>
                 <input type="text" name="last_name" id="last_name" value="' . $row['last_name'] . '">
                 <label for="project">Asigned project:</label>
-                <select name="project" id="project">
-                    <option value="">None</option>';
-        $sql = 'SELECT DISTINCT project_name FROM projects;';
+                <select name="project_id" id="project">
+                    <option value="0">None</option>';
+        $sql = 'SELECT DISTINCT projects.id, project_name FROM projects;';
         $conn->query($sql);
         $result = $conn->query($sql);
 
-        $sql = 'SELECT DISTINCT project_name FROM projects LEFT JOIN projects_people ON id = prj_id WHERE pers_id = ' . $_GET['id'] . ';';
-        $conn->query($sql);
+        $sql = 'SELECT DISTINCT id, project_name FROM projects LEFT JOIN projects_people ON id = prj_id WHERE pers_id = ' . $_GET['id'] . ';';
         $result_p = $conn->query($sql);
         $asigned_project = $result_p->fetch_assoc();
 
         if (mysqli_num_rows($result) > 0) {
             while ($row = $result->fetch_assoc()){
                 if ($row['project_name'] == $asigned_project['project_name']) {
-                    echo '<option value="' . $row['project_name'] . '" selected>' . $row['project_name'] . '</option>';
+                    echo '<option value=' . $row['id'] . ' selected>' . $row['project_name'] . '</option>';
+                    $_POST['asigned_project_id'] = $asigned_project['id'];
                 } else {
-                    echo '<option value="' . $row['project_name'] . '">' . $row['project_name'] . '</option>';
+                    echo '<option value=' . $row['id'] . '>' . $row['project_name'] . '</option>';
                 }
             }
         }
