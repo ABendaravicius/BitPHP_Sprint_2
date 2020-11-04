@@ -66,6 +66,10 @@
             <input type="text" name="first_name" id="first_name" value="' . $row['first_name'] . '">
             <label for="last_name">Last name:</label>
             <input type="text" name="last_name" id="last_name" value="' . $row['last_name'] . '">
+            <label for="project">Asigned project:</label>
+            <select name="project" id="project">
+                <option>None</option>
+            </select>   
             <button type="submit">Update</button>
         </form>';
     }
